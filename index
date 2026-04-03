@@ -1,30 +1,37 @@
 <html>
 
 <head>
-    <title>Wordle </title>
+    <title>Wordle</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-
 <body>
-    <script>
 
+    <script>
         // Wordle Game play will go Here
         // Example word list
-
-        const wordList = ["Casks", "Costs", "Moron", "Waist", "Flops", "False", "Smart", "Tonic", "Abuse", "Inept", "Manly", "Image", "Trial", "Gloom", "Child", "Force", "Joint", "Ruins", "Fools", "Olden", "Press", "Frail", "Trite", "Wager", "Users", "Niave", "Shill", "Vauge", "Rigid", "Cocky", "Lost", "Tense", "Bribe", "Sneak", "Cheat", "Gouge", "Think", "Union", "Asset", "Maker", "Craft", "Ready", "Indepent", "Model", "Ethic", "Study", "Pasts", "Learn", "Aware", "Query", "Catch", "Alter", "Heart", "Amend"];
+        const wordList = [
+            "Casks", "Costs", "Moron", "Waist", "Flops", "False", "Smart", "Tonic",
+            "Abuse", "Inept", "Manly", "Image", "Trial", "Gloom", "Child", "Force",
+            "Joint", "Ruins", "Fools", "Olden", "Press", "Frail", "Trite", "Wager",
+            "Users", "Niave", "Shill", "Vauge", "Rigid", "Cocky", "Lost", "Tense",
+            "Bribe", "Sneak", "Cheat", "Gouge", "Think", "Union", "Asset", "Maker",
+            "Craft", "Ready", "Indepent", "Model", "Ethic", "Study", "Pasts",
+            "Learn", "Aware", "Query", "Catch", "Alter", "Heart", "Amend"
+        ];
 
         // Randomly select a target word
         const slctWord = wordList[Math.floor(Math.random() * wordList.length)];
 
-        //Line For Testing 001 
+        // Line For Testing 001
         console.log("Target Word:", slctWord);
 
-        //The player has 6 tries to guess a 5 letter word.
-        //Guesses must be 5 letter words (you will need to validate this)
+        // The player has 6 tries to guess a 5 letter word.
+        // Guesses must be 5 letter words (you will need to validate this)
 
         let attempts = 6; // Number of attempts allowed
+
         function checkGuess(guess) {
             if (guess.length !== 5) {
                 alert("Please enter a 5-letter word.");
@@ -32,95 +39,102 @@
             }
 
             let feedback = "";
-            for (let i = 0; i < guess.length; i++)
-            //if the letter is in the same place as in the guess word (green)
-            {
+
+            for (let i = 0; i < guess.length; i++) {
+                // if the letter is in the same place (green)
                 if (guess[i] === slctWord[i]) {
                     feedback += "green";
-
                 }
-                // if the letter is in the answer but in a different place than in your guess word (yellow)
+                // if the letter is in the word but wrong place (yellow)
                 else if (slctWord.includes(guess[i])) {
                     feedback += "yellow";
                 }
-                // if the letter is not in the answer (grey)
+                // if the letter is not in the word (grey)
                 else {
                     feedback += "grey";
                 }
             }
 
-            //Line For Testing 002
+            // Line For Testing 002
             console.log(feedback);
+
             attempts--;
+
             if (feedback === "greengreengreengreengreen") {
                 alert("Congratulations! You've guessed the word!");
             } else if (attempts === 0) {
                 alert(`Game Over! The correct word was: ${slctWord}`);
             }
         }
-        //Display a used letter board so that the user can avoid letters that have been eliminated.
+
+        // Display remaining letters
         let remainingLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
         function updateRemainingLetters(guess) {
             for (let i = 0; i < guess.length; i++) {
                 if (remainingLetters.includes(guess[i])) {
                     remainingLetters = remainingLetters.replace(guess[i], "");
                 }
             }
-            //Include a “debug” mode that displays the answer in the console so that it is easier to check correct operation. 
 
             console.log("Remaining Letters:", remainingLetters);
-            updateRemainingLetters(guess);
-            //Multiple rounds of play with a reset button to start a new game without refreshing the page.
 
-            let rsetBttn = document.write("button");
-            rsetBttn.innerText = "Reset Game";
-            rsetBttn.onclick = function () {
-                location.reload(); // Reload the page to reset the game
-            };
-            document.body.appendChild(rsetBttn);
 
-            //Table Interface to display the guesses and feedback in a more user-friendly way.
-            document.write("<table id='TableDis'><tr><th>Guess</th><th>Feedback</th></tr></table>");
-            function addGuessToTable(guess, feedback) {
-                const table = document.getElementById("TableDis");
-                const newRow = table.insertRow();
-                const guessCell = newRow.insertCell(0);
-                const feedbackCell = newRow.insertCell(1);
-                guessCell.textContent = guess;
-                feedbackCell.textContent = feedback;
-            }
+            // Reset button
+            let rsetBttn = document.createElement("button");
+rsetBttn.innerText = "Reset Game";
+rsetBttn.onclick = function () {
+    location.reload();
+};
+document.body.appendChild(rsetBttn);
 
-            // statistics tracking for wins, losses, and average number of guesses per game.
+            // Table Interface
+            addGuessToTable(guess, feedback);
+          function addGuessToTable(guess, feedback) {
+    const table = document.getElementById("TableDis");
+    const newRow = table.insertRow();
+    const guessCell = newRow.insertCell(0);
+    const feedbackCell = newRow.insertCell(1);
 
+    guessCell.textContent = guess;
+    feedbackCell.textContent = feedback;
+}
+            // Statistics tracking
             let win = 0;
             let losse = 0;
             let totalGuesses = 0;
+
             function updateStatistics(isWin, guesses) {
                 if (isWin) {
                     win++;
                 } else {
                     losse++;
                 }
+
                 totalGuesses += guesses;
-                console.log(`Wins: ${win}, Losses: ${losse}, Average Guesses: ${totalGuesses / (win + losse)}`);
+
+                console.log(
+                    `Wins: ${win}, Losses: ${losse}, Average Guesses: ${totalGuesses / (win + losse)}`
+                );
             }
 
-            //winning animation or message when the player guesses the word correctly.
+            // Winning animation/message
             function WinMessage() {
                 alert("Congratulations! You've guessed the word!");
-                // text fade-out animation
+
                 const message = document.createElement("div id='winMessage'>" + "</div>");
                 message.textContent = "Congratulations! You've guessed the word!";
+
                 message.style.position = "fixed";
                 message.style.top = "50%";
                 message.style.left = "50%";
                 message.style.transform = "translate(-50%, -50%)";
                 message.style.fontSize = "24px";
                 message.style.opacity = "1";
+
                 document.body.appendChild(message);
-
             }
-
+        }
     </script>
 
     <style>
@@ -146,7 +160,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
-            background-color: blueviolet;
+            background-color: rgba(137, 43, 226, 0.305);
         }
 
         input[type="text"] {
@@ -154,11 +168,12 @@
             font-size: 16px;
             width: 200px;
             font: 1em sans-serif;
-            color: rgb(253, 169, 128);
+            color: peachpuff;
+            background-color: rgba(27, 27, 27, 0.397);
         }
 
         #winMessage {
-            color: rgb(13, 96, 101);
+            color: rgb(3, 184, 194);
             animation: fadeOut 3s forwards;
         }
 
@@ -167,14 +182,19 @@
                 opacity: 0;
             }
         }
-
-        ;
     </style>
-
+    <table id="TableDis">
+        <tr>
+            <th>Guess</th>
+            <th>Feedback</th>
+        </tr>
+    </table>
 
     <input type="text" id="guessInput" maxlength="5">
-    <button onclick="checkGuess(document.getElementById('guessInput').value)">Guess
+    <button onclick="checkGuess(document.getElementById('guessInput').value)">
+        Guess
     </button>
 
 </body>
+
 </html>
