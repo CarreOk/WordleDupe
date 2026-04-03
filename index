@@ -6,13 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wordle Demo</title>
   <style>
-
-
-    #used-letters span {
-      margin: 0 4px;
-      font-weight: bold;
-    }
-
   body {
     /* dark background so the grid shows nicely */
     background-color: #111;
@@ -41,36 +34,6 @@
     color: #ffffff;
   }
 
-  /* correct (lavender) */
-  .correct-letter {
-    background-color: #e6e6fa;
-    color: #2b2b2b;
-  }
-
-  /* present (yellow) */
-  .present-letter {
-    background-color: #ffd700;
-    color: #000000;
-  }
-
-  /* absent (fuchsia) */
-  .absent-letter {
-    background-color: #ff00ff;
-    color: #ffffff;
-  }
-
-
-  #used-letters span {
-    margin: 0 4px;
-    font-weight: bold;
-    display: inline-block;
-    padding: 4px 6px;
-    border-radius: 4px;
-    /* fallback style if no status class is applied */
-    background-color: #333;
-    color: #ffffff;
-  }
-
   /* Correct letters (was green) -> lavender */
   .correct-letter {
     background-color: #e6e6fa;  /* lavender */
@@ -88,8 +51,7 @@
     background-color: #ff00ff;  /* fuchsia */
     color: #ffffff;             /* white text for contrast */
   }
-
-  </style>
+</style>
 </head>
 
 <body>
