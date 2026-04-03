@@ -6,10 +6,89 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wordle Demo</title>
   <style>
+
+
     #used-letters span {
       margin: 0 4px;
       font-weight: bold;
     }
+
+  body {
+    /* dark background so the grid shows nicely */
+    background-color: #111;
+    background-image:
+      radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px);
+    background-size: 10px 10px; /* size of the dot matrix */
+    color: #f8f8f8;             /* default text color on dark bg */
+    font-family: sans-serif;
+  }
+
+  /* make letter tiles circular */
+  #used-letters span {
+    display: inline-flex;      /* center text inside circle */
+    align-items: center;
+    justify-content: center;
+
+    width: 32px;               /* same width and height -> circle */
+    height: 32px;
+    margin: 4px;
+    font-weight: bold;
+
+    border-radius: 50%;        /* key line: makes it a circle */
+
+    /* base styling – you can override with your status classes */
+    background-color: #333;
+    color: #ffffff;
+  }
+
+  /* correct (lavender) */
+  .correct-letter {
+    background-color: #e6e6fa;
+    color: #2b2b2b;
+  }
+
+  /* present (yellow) */
+  .present-letter {
+    background-color: #ffd700;
+    color: #000000;
+  }
+
+  /* absent (fuchsia) */
+  .absent-letter {
+    background-color: #ff00ff;
+    color: #ffffff;
+  }
+
+
+  #used-letters span {
+    margin: 0 4px;
+    font-weight: bold;
+    display: inline-block;
+    padding: 4px 6px;
+    border-radius: 4px;
+    /* fallback style if no status class is applied */
+    background-color: #333;
+    color: #ffffff;
+  }
+
+  /* Correct letters (was green) -> lavender */
+  .correct-letter {
+    background-color: #e6e6fa;  /* lavender */
+    color: #2b2b2b;             /* dark text for contrast */
+  }
+
+  /* Present letters (yellow) stays yellow */
+  .present-letter {
+    background-color: #ffd700;  /* gold/yellow */
+    color: #000000;             /* black text for contrast */
+  }
+
+  /* Absent letters (was grey) -> fuchsia */
+  .absent-letter {
+    background-color: #ff00ff;  /* fuchsia */
+    color: #ffffff;             /* white text for contrast */
+  }
+
   </style>
 </head>
 
